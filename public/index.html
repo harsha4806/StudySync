@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description"
+        content="StudySync - Your personal cloud-based study planner.">
+
+  <title>StudySync | Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ==============================
+       AUTHENTICATION SCREEN
+  =============================== -->
+
+  <section id="authScreen"
+           class="auth-screen"
+           aria-label="Student authentication">
+
+    <div class="auth-card">
+
+      <h1>🎓 StudySync</h1>
+
+      <p>Your personal study companion</p>
+
+      <!-- LOGIN FORM -->
+
+      <div id="loginForm">
+
+        <h2>Welcome Back!</h2>
+
+        <form id="login">
+
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="Email address"
+            aria-label="Email address"
+            autocomplete="email"
+            required
+          >
+
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Password"
+            aria-label="Password"
+            autocomplete="current-password"
+            required
+          >
+
+          <button type="submit" class="primary">
+            Login
+          </button>
+
+        </form>
+
+        <p>
+          New student?
+          <a href="#" id="showRegister">
+            Create Account
+          </a>
+        </p>
+
+      </div>
+
+      <!-- REGISTRATION FORM -->
+
+      <div id="registerForm" hidden>
+
+        <h2>Create Account</h2>
+
+        <form id="register">
+
+          <input
+            id="registerName"
+            type="text"
+            placeholder="Your name"
+            aria-label="Your name"
+            maxlength="60"
+            autocomplete="name"
+            required
+          >
+
+          <input
+            id="registerEmail"
+            type="email"
+            placeholder="Email address"
+            aria-label="Email address"
+            autocomplete="email"
+            required
+          >
+
+          <input
+            id="registerPassword"
+            type="password"
+            placeholder="Password (minimum 6 characters)"
+            aria-label="Password"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          >
+
+          <button type="submit" class="primary">
+            Register
+          </button>
+
+        </form>
+
+        <p>
+          Already registered?
+          <a href="#" id="showLogin">
+            Login
+          </a>
+        </p>
+
+      </div>
+
+      <!-- AUTHENTICATION MESSAGES -->
+
+      <p id="authMessage" role="alert" aria-live="polite"></p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==============================
+       MAIN APPLICATION
+  =============================== -->
+
+  <div class="app" hidden>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+      <h2>🎓 StudySync</h2>
+
+      <nav aria-label="Main navigation">
+
+        <button
+          type="button"
+          class="nav-btn active"
+          data-page="dashboard">
+          Dashboard
+        </button>
+
+        <button
+          type="button"
+          class="nav-btn"
+          data-page="tasks">
+          My Tasks
+        </button>
+
+        <button
+          type="button"
+          class="nav-btn"
+          data-page="subjects">
+          Subjects
+        </button>
+
+        <button
+          type="button"
+          id="logoutBtn"
+          class="nav-btn">
+          Logout
+        </button>
+
+      </nav>
+
+      <p class="sidebar-footer">
+        Your learning companion
+      </p>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+      <!-- TOPBAR -->
+
+      <header class="topbar">
+
+        <div>
+          <h1>Study Dashboard</h1>
+
+          <p>
+            Stay organized and achieve your goals.
+          </p>
+        </div>
+
+        <span id="userEmail"
+              aria-label="Logged in user"></span>
+
+        <span class="avatar" aria-hidden="true">
+          
+        </span>
+
+      </header>
+
+
+      <!-- ==============================
+           DASHBOARD PAGE
+      =============================== -->
+
+      <section id="dashboard"
+               class="page active"
+               aria-label="Dashboard">
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+          <div class="card">
+            <p>Total Tasks</p>
+            <h2 id="totalTasks">0</h2>
+          </div>
+
+          <div class="card">
+            <p>Completed</p>
+            <h2 id="completedTasks">0</h2>
+          </div>
+
+          <div class="card">
+            <p>Pending</p>
+            <h2 id="pendingTasks">0</h2>
+          </div>
+
+          <div class="card">
+            <p>Subjects</p>
+            <h2 id="totalSubjects">0</h2>
+          </div>
+
+        </div>
+
+
+        <!-- STUDY PROGRESS -->
+
+        <div class="panel">
+
+          <h2>Study Progress</h2>
+
+          <p id="progressText">
+            0% completed
+          </p>
+
+          <div class="progress-track"
+               role="progressbar"
+               aria-label="Study completion progress"
+               aria-valuemin="0"
+               aria-valuemax="100"
+               aria-valuenow="0">
+
+            <div id="progressBar"></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- UPCOMING TASKS -->
+
+        <div class="panel">
+
+          <h2>Upcoming Tasks</h2>
+
+          <div id="upcomingTasks"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==============================
+           MY TASKS PAGE
+      =============================== -->
+
+      <section id="tasks"
+               class="page"
+               aria-label="My study tasks">
+
+        <div class="panel">
+
+          <h2>Add Study Task</h2>
+
+          <form id="taskForm" class="form">
+
+            <input
+              id="taskTitle"
+              type="text"
+              placeholder="Task title"
+              aria-label="Task title"
+              maxlength="120"
+              required
+            >
+
+            <select
+              id="taskSubject"
+              aria-label="Select subject"
+              required>
+
+              <option value="">
+                Select subject
+              </option>
+
+            </select>
+
+            <input
+              id="taskDate"
+              type="date"
+              aria-label="Task deadline"
+              required
+            >
+
+            <select
+              id="taskPriority"
+              aria-label="Task priority">
+
+              <option value="Low">
+                Low priority
+              </option>
+
+              <option value="Medium">
+                Medium priority
+              </option>
+
+              <option value="High">
+                High priority
+              </option>
+
+            </select>
+
+            <button type="submit" class="primary">
+              Add Task
+            </button>
+
+          </form>
+
+        </div>
+
+
+        <div class="panel">
+
+          <h2>My Study Tasks</h2>
+
+          <div id="taskList"></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==============================
+           SUBJECTS PAGE
+      =============================== -->
+
+      <section id="subjects"
+               class="page"
+               aria-label="My subjects">
+
+        <div class="panel">
+
+          <h2>Add Subject</h2>
+
+          <form id="subjectForm" class="form">
+
+            <input
+              id="subjectName"
+              type="text"
+              placeholder="e.g. Computer Networks"
+              aria-label="Subject name"
+              maxlength="60"
+              required
+            >
+
+            <button type="submit" class="primary">
+              Add Subject
+            </button>
+
+          </form>
+
+        </div>
+
+
+        <div class="panel">
+
+          <h2>My Subjects</h2>
+
+          <div id="subjectList"></div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- JAVASCRIPT MODULE -->
+
+  <script type="module" src="script.js"></script>
+
+</body>
+
+</html>
